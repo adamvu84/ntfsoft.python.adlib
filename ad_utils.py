@@ -284,6 +284,14 @@ def ad_save_tuple_to_file(data, filename='tuple.json'):
         print(f"Error saving to file: {e}")
 
 
+def ad_dump_json_to_file(data, filename='data.json'):
+    try:
+        with open(filename, 'w') as file:
+            json.dump(data, file, indent=4)
+    except Exception as e:
+        print(f"Error saving to file: {e}")
+
+
 def read_app_config(config_file_path, section, key):
     try:
         config_parser = configparser.RawConfigParser(allow_no_value=True)

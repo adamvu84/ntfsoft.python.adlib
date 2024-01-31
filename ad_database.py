@@ -6,7 +6,6 @@ Created on 27/05/2022 01:17
 
 import mysql.connector
 import time
-import ConfigParser
 import logging
 
 
@@ -14,15 +13,17 @@ logger = logging.getLogger(__name__)
 
 class DatabaseWrapper:
 
-    def __init__(self, host_name, user_name, password, port, charset, commit):
-        self._conn = mysql.connector(
+    def __init__(self, host_name, port, user_name, password, database, charset, commit, prefix):
+        self._conn = mysql.connector.connect(
             host=host_name,
+            port=port,
             user=user_name,
             password=password,
-            port=port,
+            database=database,
             charset=charset,
             autocommit=commit)
         self._cursor = self._conn.cursor()
+        self._prefix = prefix
 
     def __enter__(self):
         return self
@@ -37,6 +38,10 @@ class DatabaseWrapper:
     @property
     def cursor(self):
         return self._cursor
+
+    @property
+    def prefix(self):
+        return self._prefix
 
     def commit(self):
         self.connection.commit()
