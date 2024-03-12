@@ -6,6 +6,7 @@ Created on 27/05/2022 01:17
 
 import redis
 import logging
+import time
 
 
 logger = logging.getLogger(__name__)
@@ -46,7 +47,16 @@ class RedisWrapper:
         return self._conn
 
     def set(self, key, value):
-        self._conn.set(f"{self._prefix}:{key}", value)
+        if self._prefix != '':
+            self._conn.set(f"{self._prefix}:{key}", value)
+        else:
+            self._conn.set(key, value)
 
     def get(self, key):
-        return self._conn.get(f"{self._prefix}:{key}")
+        if self._prefix != '':
+            return self._conn.get(f"{self._prefix}:{key}")
+        else:
+            return self._conn.get(key)
+
+    def publish(self, channel, message):
+        self._conn.publish(channel, message)
