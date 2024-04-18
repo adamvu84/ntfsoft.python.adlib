@@ -143,7 +143,7 @@ def ad_mkdir_p(path):
 def ad_save_text(txt, write_to, is_append=False):
     write_mode = 'wb'
     if is_append:
-        write_mode += 'a'
+        write_mode = 'ab'
     with open(write_to, write_mode) as fp:
         fp.write(txt.encode('utf-8'))
 
