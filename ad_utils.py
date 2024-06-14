@@ -140,12 +140,15 @@ def ad_mkdir_p(path):
             raise
 
 
-def ad_save_text(txt, write_to, is_append=False):
+def ad_save_text(txt, write_to, is_append=False, should_encode=True, encoding='utf-8'):
     write_mode = 'wb'
     if is_append:
         write_mode = 'ab'
     with open(write_to, write_mode) as fp:
-        fp.write(txt.encode('utf-8'))
+        if should_encode:
+            fp.write(txt.encode(encoding))
+        else:
+            fp.write(txt)
 
 
 def ad_write_file(string_to_be_written, file_to_write, is_append=False):
