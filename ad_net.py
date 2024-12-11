@@ -139,8 +139,9 @@ def ad_get_request_json(logger, url, data, headers = {}):
             error_json = response.json()
             logger.error("ad_post_request.Error JSON:")
             logger.error(error_json)
+            return error_json
         except ValueError:
             # If parsing as JSON fails, print the raw content
             logger.error("ad_post_request.Error Content:")
             logger.error(response.text)
-        return None
+            return None
