@@ -30,7 +30,7 @@ def ad_download_file(url, file_to_write):
     urllib.request.urlretrieve(url, file_to_write)
 
 
-def ad_download_page(url, decode_utf8=True, encoding='utf-8'):
+def ad_download_page(url, decode_utf8=True, encoding='utf-8', cookies=None):
     """
     Download a page
 
@@ -44,7 +44,13 @@ def ad_download_page(url, decode_utf8=True, encoding='utf-8'):
         source code of webpage.
 
     """
-    resp = urllib.request.urlopen(url)
+    req = urllib.request.Request(url)
+
+    if cookies:
+        req.add_header("Cookie", cookies)
+
+    resp = urllib.request.urlopen(req)
+
     if decode_utf8:
         return resp.read().decode(encoding)
     else:

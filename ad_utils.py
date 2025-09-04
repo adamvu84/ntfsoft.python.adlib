@@ -316,3 +316,7 @@ def read_config_section(config_file_path, section):
     except Exception as e:
         print(f"Error read_config_section: {e}")
         return None
+
+
+def float_to_vnd(a_float):
+    return '{:,.2f}'.format(a_float).replace('.', '#').replace(',', '.').replace('#', ',')
