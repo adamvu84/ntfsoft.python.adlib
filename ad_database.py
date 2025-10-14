@@ -84,3 +84,18 @@ class DatabaseWrapper:
         except Exception as e:
             logger.exception(e)
             return None
+
+    def queryObjects(self, sql, params=None):
+        try:
+            self.cursor.execute(sql, params or ())
+            column_names = [i[0] for i in self.cursor.description]
+            results_as_objects = []
+
+            for row_tuple in self.cursor.fetchall():
+                row_dict = dict(zip(column_names, row_tuple))
+                results_as_objects.append(row_dict)
+
+            return results_as_objects
+        except Exception as e:
+            logger.exception(e)
+            return None
