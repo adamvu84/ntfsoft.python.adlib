@@ -7,6 +7,7 @@ Created on 27/05/2022 01:17
 import requests as rq
 import json
 
+_session = requests.Session()
 
 def send_telegram_message(message: str,
                           chat_id: str,
@@ -21,7 +22,7 @@ def send_telegram_message(message: str,
                  'disable_notification': False}
     data = json.dumps(data_dict)
     url = f'https://api.telegram.org/bot{api_key}/sendMessage'
-    response = rq.post(url, data=data, headers=headers, timeout=10)
+    response = _session.post(url, data=data, headers=headers, timeout=10)
     return response
 
 
