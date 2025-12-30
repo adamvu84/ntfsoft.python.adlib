@@ -7,7 +7,7 @@ Created on 27/05/2022 01:17
 import requests as rq
 import json
 
-_session = requests.Session()
+_session = rq.Session()
 
 def send_telegram_message(message: str,
                           chat_id: str,
