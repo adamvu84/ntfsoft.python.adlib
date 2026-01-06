@@ -14,15 +14,14 @@ def send_telegram_message(message: str,
                           api_key: str,
                           parse_mode: str='HTML'):
 
-    headers = {'Content-Type': 'application/json',
-               'Proxy-Authorization': 'Basic base64'}
+    headers = {'Content-Type': 'application/json'}
     data_dict = {'chat_id': chat_id,
                  'text': message,
                  'parse_mode': parse_mode,
                  'disable_notification': False}
     data = json.dumps(data_dict)
     url = f'https://api.telegram.org/bot{api_key}/sendMessage'
-    response = _session.post(url, data=data, headers=headers, timeout=(5, 20))
+    response = _session.post(url, json=data_dict, headers=headers, timeout=(10, 20))
     return response
 
 
