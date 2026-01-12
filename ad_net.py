@@ -140,7 +140,7 @@ def ad_get_request_json(logger, url, data, headers=None):
             headers=headers or {},
             timeout=(5, 30)
         )
-    except requests.exceptions.Timeout:
+    except rq.exceptions.Timeout:
         logger.error("ad_get_request_json.Timeout")
         return None
 
