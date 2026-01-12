@@ -133,21 +133,26 @@ def ad_post_request(logger, url, data, add_headers = {}):
         return None
 
 
-def ad_get_request_json(logger, url, data, headers = {}):
-    response = rq.get(
-        url,
-        headers=headers)
+def ad_get_request_json(logger, url, data, headers=None):
+    try:
+        response = rq.get(
+            url,
+            headers=headers or {},
+            timeout=(5, 30)
+        )
+    except requests.exceptions.Timeout:
+        logger.error("ad_get_request_json.Timeout")
+        return None
+
     if response.ok:
         return response.json()
     else:
         try:
-            # Attempt to parse the error response as JSON
             error_json = response.json()
             logger.error("ad_get_request_json.Error JSON:")
             logger.error(error_json)
             return error_json
         except ValueError:
-            # If parsing as JSON fails, print the raw content
             logger.error("ad_get_request_json.Error Content:")
             logger.error(response.text)
             return None
